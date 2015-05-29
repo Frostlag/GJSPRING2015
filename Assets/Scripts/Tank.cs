@@ -2,7 +2,10 @@
 using System.Collections;
 
 public class Tank : MonoBehaviour {
+	public Shot shot;
+
 	Rigidbody2D rigidBody;
+
 	// Use this for initialization
 	void Start () {
 		rigidBody = this.GetComponent<Rigidbody2D> ();
@@ -21,5 +24,9 @@ public class Tank : MonoBehaviour {
 			Debug.Log("right");
 			rigidBody.AddForce (transform.right.normalized * 1);
 		}
+	}
+
+	void Fire(){
+		Instantiate (shot,transform.position,Quaternion.identity);
 	}
 }
