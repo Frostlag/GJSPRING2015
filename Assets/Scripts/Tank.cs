@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Tank : MonoBehaviour {
 	public Shot shot;
+	public int power = 100;
 
 	Rigidbody2D rigidBody;
 
@@ -27,6 +28,7 @@ public class Tank : MonoBehaviour {
 	}
 
 	void Fire(){
-		Instantiate (shot,transform.position,Quaternion.identity);
+		Shot newShot = (Shot) Instantiate (shot,transform.position,Quaternion.identity);
+		newShot.GetComponent<Rigidbody2D> ().AddForce(transform.up.normalized * power);
 	}
 }
