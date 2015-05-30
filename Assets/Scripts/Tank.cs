@@ -20,7 +20,8 @@ public class Tank : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-			
+		if (Health < 0)
+			Explode ();
 	}
 
 	void Move(string direction){
@@ -52,7 +53,6 @@ public class Tank : MonoBehaviour {
 		temp = temp + child.transform.up/3*2;
 		Shot newShot = (Shot) Instantiate (shot,temp,Quaternion.identity);
 		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
-
 		shotpower = 0;
 	}
 
@@ -68,5 +68,13 @@ public class Tank : MonoBehaviour {
 		Health -= number;
 	}
 
-
+	void Explode(){
+		GameObject go = Instantiate (Resources.Load("Explosion"),this.transform.position,Quaternion.identity) as GameObject;
+		Explosion explosion = go.GetComponent<Explosion> ();
+		explosion.explodeRate = 0.005f;
+		explosion.explodeTime = 2;
+		explosion.damage = 0.5f;
+		Destroy (gameObject);
+		
+	}
 }
