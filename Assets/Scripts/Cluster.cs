@@ -15,6 +15,7 @@ public class Cluster : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		startTime = Time.time;
+		Manager.instance.waitFor.Add (gameObject);
 	}
 	
 	// Update is called once per frame
@@ -35,7 +36,6 @@ public class Cluster : MonoBehaviour {
 	}
 	
 	void Explode(){
-		Manager.instance.SendMessage ("ShotEnd");
 		if (!dead) {
 			dead = true;
 			for (int i=0; i<5; i++) {

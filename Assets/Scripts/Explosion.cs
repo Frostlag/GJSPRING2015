@@ -9,6 +9,7 @@ public class Explosion : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		startTime = Time.time;
+		Manager.instance.waitFor.Add (gameObject);
 	}
 	
 	// Update is called once per frame
