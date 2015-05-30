@@ -5,9 +5,11 @@ public class Tank : MonoBehaviour {
 	public Shot shot;
 	public float shotpower = 0;
 	public float maxshotpower;
-	public float thrustpower = 2;
+	public float movespeed = 2;
 	public float aimspeed = 1;
 	public float chargerate = 1;
+	public float Health;
+	public Texture2D powerBar;
 
 	Rigidbody2D rigidBody;
 
@@ -18,15 +20,14 @@ public class Tank : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-	
+			
 	}
 
 	void Move(string direction){
 		if (direction == "left") {
-			rigidBody.AddForce (transform.right.normalized * -thrustpower);
+			this.transform.position += transform.right.normalized * -movespeed;
 		} else {
-			rigidBody.AddForce (transform.right.normalized * thrustpower);
+			this.transform.position += transform.right.normalized * movespeed;
 		}
 	}
 	void Aim(string direction){
@@ -42,20 +43,28 @@ public class Tank : MonoBehaviour {
 	}
 
 	void Charge(){
-		shotpower += chargerate;
+		shotpower = Mathf.Clamp (shotpower+chargerate, 0, maxshotpower);
 	}
 	void Fire(){
+
 		Transform child = this.transform.GetChild (0);
 		Vector3 temp = child.position;
-		temp = temp + child.transform.up/5;
+		temp = temp + child.transform.up/3*2;
 		Shot newShot = (Shot) Instantiate (shot,temp,Quaternion.identity);
-		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower);
+		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
+
 		shotpower = 0;
 	}
 
 	void OnGUI()
 	{
 		var point = Camera.main.WorldToScreenPoint(transform.position);
-		GUI.Label(new Rect(point.x, Screen.currentResolution.height - point.y - 200, 200, 200), name);
+	
+		GUI.Label(new Rect(point.x, Screen.height - point.y+10, 200, 20),	 Health.ToString("0.00"));
+		GUI.DrawTexture (new Rect (10, Screen.height - 50, 290/maxshotpower*shotpower, 20), powerBar);
+	}
+
+	void Damage(float number){
+		Health -= number;
 	}
 }

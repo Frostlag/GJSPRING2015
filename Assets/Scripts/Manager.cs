@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Manager : MonoBehaviour {
-	public Tank tank;
+	public Tank[] tanks;
+	private List<Tank> tankturns = new List<Tank> ();
+	private Tank tank;
 	public static Manager instance = null;
 	public float G;
 	// Use this for initialization
@@ -10,10 +13,18 @@ public class Manager : MonoBehaviour {
 		if (!instance) {
 			instance = this;
 		}
+		foreach (Tank t in tanks){
+			tankturns.Add(t);
+		}
+		tank = tankturns[0];
+		tankturns.Remove (tank);
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (tank == null)
+			return;
 		if (Input.GetKey ("left")) {
 			tank.SendMessage("Move","left");
 		}
@@ -31,6 +42,13 @@ public class Manager : MonoBehaviour {
 		} 
 		if (Input.GetKeyUp ("space")) {
 			tank.SendMessage("Fire");
+			tankturns.Add(tank);
+			tank = null;
 		}
+	}
+
+	void NextTurn(){
+		tank = tankturns [0];
+		tankturns.Remove (tank);
 	}
 }

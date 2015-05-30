@@ -39,7 +39,7 @@ public class grav : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D(Collider2D other){
-		if (other.gameObject.GetComponent<grav>() && this.GetComponent<CircleCollider2D>().sharedMaterial.name == "planet") {
+		if (other.gameObject.GetComponent<grav>() && this.GetComponent<CircleCollider2D>().sharedMaterial.name == "Gfield") {
 			Vector2 force = new Vector2(this.GetComponent<Transform>().localPosition.x, this.GetComponent<Transform>().localPosition.y) - new Vector2(other.GetComponent<Transform>().localPosition.x, other.GetComponent<Transform>().localPosition.y);
 			float G = Manager.instance.G;
 			float mag = G*this.getMass()*other.gameObject.GetComponent<grav>().getMass()/Mathf.Pow (force.magnitude,2);
