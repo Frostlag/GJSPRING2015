@@ -15,7 +15,6 @@ public class Explosion : MonoBehaviour {
 	void Update () {
 		transform.localScale += new Vector3(explodeRate,explodeRate);
 		if (Time.time > startTime + explodeTime){
-			Debug.Log (explodeTime);
 			Destroy(gameObject);
 		}
 	}
@@ -23,6 +22,7 @@ public class Explosion : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other){
 		
 		if (other.sharedMaterial.name == "tank") {
+			Debug.Log(damage);
 			other.gameObject.SendMessage ("Damage", damage);
 		}
 	}

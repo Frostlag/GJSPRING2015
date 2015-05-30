@@ -33,7 +33,7 @@ public class Shot : MonoBehaviour {
 		Explosion explosion = go.GetComponent<Explosion> ();
 		explosion.explodeRate = 0.005f;
 		explosion.explodeTime = 0.5f;
-		explosion.damage = 0.1f;
+		explosion.damage = 1f;
 		Destroy (gameObject);
 
 	}

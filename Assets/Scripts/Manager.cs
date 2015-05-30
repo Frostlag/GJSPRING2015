@@ -39,6 +39,12 @@ public class Manager : MonoBehaviour {
 		}
 		if (Input.GetKey ("space")) {
 			tank.SendMessage("Charge");
+		}
+		if (Input.GetKeyDown ("up")) {
+			tank.SendMessage("Move","up");
+		} 
+		if (Input.GetKeyDown ("down")) {
+			tank.SendMessage("Move","down");
 		} 
 		if (Input.GetKeyUp ("space")) {
 			tank.SendMessage("Fire");

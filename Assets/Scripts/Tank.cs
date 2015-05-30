@@ -6,6 +6,7 @@ public class Tank : MonoBehaviour {
 	public float shotpower = 0;
 	public float maxshotpower;
 	public float movespeed = 2;
+	public float thrustforce;
 	public float aimspeed = 1;
 	public float chargerate = 1;
 	public float Health;
@@ -20,15 +21,18 @@ public class Tank : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Health < 0)
-			Explode ();
+		if (Health < 0) Explode ();
 	}
 
 	void Move(string direction){
 		if (direction == "left") {
 			this.transform.position += transform.right.normalized * -movespeed;
-		} else {
+		} else if (direction == "right"){
 			this.transform.position += transform.right.normalized * movespeed;
+		}else if (direction == "up"){
+			this.rigidBody.AddForce(transform.up.normalized * thrustforce);
+		}else if (direction == "down"){
+			this.rigidBody.AddForce(transform.up.normalized * -thrustforce);
 		}
 	}
 	void Aim(string direction){
@@ -73,7 +77,7 @@ public class Tank : MonoBehaviour {
 		Explosion explosion = go.GetComponent<Explosion> ();
 		explosion.explodeRate = 0.005f;
 		explosion.explodeTime = 2;
-		explosion.damage = 0.5f;
+		explosion.damage = 1f;
 		Destroy (gameObject);
 		
 	}
