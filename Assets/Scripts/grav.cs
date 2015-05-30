@@ -19,6 +19,7 @@ public class grav : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		setScale ();
+		setMass ();
 	}
 
 	void setScale(){
@@ -28,17 +29,22 @@ public class grav : MonoBehaviour {
 	float getMass(){
 		return density * getVolume ();
 	}
+	void setMass(){
+		if (this.GetComponent<Rigidbody2D>())
+			GetComponent<Rigidbody2D> ().mass = getMass ();
+	}
 
 	float getVolume(){
 		return 4 / 3 * Mathf.Pow (radius, 3) * Mathf.PI;
 	}
 
 	void OnTriggerStay2D(Collider2D other){
-		if (other.gameObject.GetComponent<grav>()) {
+		if (other.gameObject.GetComponent<grav>() && this.GetComponent<CircleCollider2D>().sharedMaterial.name == "planet") {
 			Vector2 force = new Vector2(this.GetComponent<Transform>().localPosition.x, this.GetComponent<Transform>().localPosition.y) - new Vector2(other.GetComponent<Transform>().localPosition.x, other.GetComponent<Transform>().localPosition.y);
 			float G = Manager.instance.G;
 			float mag = G*this.getMass()*other.gameObject.GetComponent<grav>().getMass()/Mathf.Pow (force.magnitude,2);
-			other.attachedRigidbody.AddForce (force * mag);
+			if (other.gameObject.GetComponent<Rigidbody2D>())
+				other.attachedRigidbody.AddForce (force * mag);
 		}
 	}
 }
