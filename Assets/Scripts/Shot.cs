@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Shot : MonoBehaviour {
 	private float startTime;
-	public int life;
+	public float life;
 	// Use this for initialization
 	void Start () {
 		startTime = Time.time;
@@ -11,6 +11,8 @@ public class Shot : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (Time.time > startTime + life) {
+			Destroy(gameObject);
+		}
 	}
 }
