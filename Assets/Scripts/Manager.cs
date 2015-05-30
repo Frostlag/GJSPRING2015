@@ -8,6 +8,10 @@ public class Manager : MonoBehaviour {
 	private Tank tank;
 	public static Manager instance = null;
 	public float G;
+
+	public List<GameObject> waitFor = new List<GameObject> ();
+
+	private bool wait;
 	// Use this for initialization
 	void Start () {
 		if (!instance) {
@@ -23,6 +27,21 @@ public class Manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (wait) {
+			if (waitFor.Count != 0){
+				List<GameObject> tbr = new List<GameObject>();
+				foreach (GameObject go in waitFor){
+					if (go == null) tbr.Add(go);
+				}
+				foreach (GameObject go in tbr){
+					waitFor.Remove(go);
+				}
+				return;
+			}else{
+				NextTurn();
+				wait = false;
+			}
+		}
 		if (tank == null)
 			return;
 		if (Input.GetKey ("left")) {
@@ -50,6 +69,7 @@ public class Manager : MonoBehaviour {
 			tank.SendMessage("Fire");
 			tankturns.Add(tank);
 			tank = null;
+			wait = true;
 		}
 	}
 	void ShotEnd(){

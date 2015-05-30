@@ -12,6 +12,7 @@ public class Shot : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		startTime = Time.time;
+		Manager.instance.waitFor.Add(gameObject);
 	}
 	
 	// Update is called once per frame
@@ -32,9 +33,6 @@ public class Shot : MonoBehaviour {
 	}
 
 	void Explode(){
-		if (real) {
-			Manager.instance.SendMessage ("ShotEnd");
-		}
 		GameObject go = Instantiate (Resources.Load("Explosion"),this.transform.position,Quaternion.identity) as GameObject;
 		Explosion explosion = go.GetComponent<Explosion> ();
 		explosion.explodeRate = 0.005f;
