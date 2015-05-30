@@ -52,6 +52,12 @@ public class Tank : MonoBehaviour {
 
 	void Switch(int n){
 		shotIndex += n;
+		if (shotIndex < 0) {
+			shotIndex = shots.Length - shotIndex;
+		}
+		if (shotIndex > shots.Length) {
+			shotIndex -= shots.Length;
+		}
 	}
 
 	void Charge(){
