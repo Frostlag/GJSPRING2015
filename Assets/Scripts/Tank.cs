@@ -28,7 +28,9 @@ public class Tank : MonoBehaviour {
 	}
 
 	void Fire(){
-		Shot newShot = (Shot) Instantiate (shot,transform.position,Quaternion.identity);
+		Vector3 temp = this.transform.position;
+		temp = temp + this.transform.up*this.transform.localScale.y/10;
+		Shot newShot = (Shot) Instantiate (shot,temp,Quaternion.identity);
 		newShot.GetComponent<Rigidbody2D> ().AddForce(transform.up.normalized * power);
 	}
 }
