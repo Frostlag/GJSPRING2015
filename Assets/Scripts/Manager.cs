@@ -4,7 +4,7 @@ using System.Collections;
 public class Manager : MonoBehaviour {
 	public Tank tank;
 	public static Manager instance = null;
-	public double G;
+	public float G;
 	// Use this for initialization
 	void Start () {
 		if (!instance) {

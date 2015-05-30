@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Shot : MonoBehaviour {
-	private int startTime;
+	private float startTime;
 	public int life;
 	// Use this for initialization
 	void Start () {

@@ -9,7 +9,11 @@ public class grav : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		setScale ();
-		GetComponent<CircleCollider2D> ().radius = 50;
+		foreach (CircleCollider2D c in GetComponents<CircleCollider2D>()) {
+			if (c.isTrigger){
+				c.radius = 999;
+			}
+		}
 	}
 	
 	// Update is called once per frame
@@ -32,7 +36,7 @@ public class grav : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other){
 		if (other.gameObject.GetComponent<grav>()) {
 			Vector2 force = new Vector2(this.GetComponent<Transform>().localPosition.x, this.GetComponent<Transform>().localPosition.y) - new Vector2(other.GetComponent<Transform>().localPosition.x, other.GetComponent<Transform>().localPosition.y);
-			float G = Manager.G;
+			float G = Manager.instance.G;
 			float mag = G*this.getMass()*other.gameObject.GetComponent<grav>().getMass()/Mathf.Pow (force.magnitude,2);
 			other.attachedRigidbody.AddForce (force * mag);
 		}
