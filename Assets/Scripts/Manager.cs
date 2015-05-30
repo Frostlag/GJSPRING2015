@@ -85,4 +85,6 @@ public class Manager : MonoBehaviour {
 		tank = tankturns [0];
 		tankturns.Remove (tank);
 	}
+
+	public Tank getTurn(){ return tank; }
 }

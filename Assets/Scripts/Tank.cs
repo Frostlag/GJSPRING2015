@@ -73,7 +73,7 @@ public class Tank : MonoBehaviour {
 		Transform child = this.transform.GetChild (0);
 		Vector3 temp = child.position;
 		temp = temp + child.transform.up/3*2;
-		GameObject newShot = Instantiate (shot,temp,transform.rotation) as GameObject;
+		GameObject newShot = Instantiate (shot,temp,child.rotation) as GameObject;
 		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
 		shotpower = 0;
 	}
@@ -86,6 +86,9 @@ public class Tank : MonoBehaviour {
 		GUI.DrawTexture (new Rect (10, Screen.height - 50, 290/maxshotpower*shotpower, 20), powerBar);
 		
 		GUI.Label(new Rect(point.x, Screen.height - point.y, 200, 20),	 shots[shotIndex]);
+		if (Manager.instance.getTurn() == this) {
+			GUI.Label(new Rect(point.x, Screen.height - point.y-25, 200, 20),	 "Turn");
+		}
 	}
 	
 	void Damage(float number){
