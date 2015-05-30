@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Tank : MonoBehaviour {
-	public Shot shot;
+	public GameObject shot;
 	public float shotpower = 0;
 	public float maxshotpower;
 	public float movespeed = 2;
@@ -14,12 +14,15 @@ public class Tank : MonoBehaviour {
 	public Texture2D powerBar;
 	string[] shots = {"Shot","Cluster","Salvo"};
 	int shotIndex = 0;
+	Sprite shotpic;
 
 	Rigidbody2D rigidBody;
 
 	// Use this for initialization
 	void Start () {
 		rigidBody = this.GetComponent<Rigidbody2D> ();
+		shot = Resources.Load (shots [shotIndex]) as GameObject;
+
 	}
 	
 	// Update is called once per frame
@@ -53,22 +56,24 @@ public class Tank : MonoBehaviour {
 	void Switch(int n){
 		shotIndex += n;
 		if (shotIndex < 0) {
-			shotIndex = shots.Length - shotIndex;
+			shotIndex = shots.Length + shotIndex;
 		}
-		if (shotIndex > shots.Length) {
+		if (shotIndex >= shots.Length) {
 			shotIndex -= shots.Length;
 		}
+		shot = Resources.Load (shots [shotIndex]) as GameObject;
 	}
 
 	void Charge(){
 		shotpower = Mathf.Clamp (shotpower+chargerate, 0, maxshotpower);
+
 	}
 	void Fire(){
 
 		Transform child = this.transform.GetChild (0);
 		Vector3 temp = child.position;
 		temp = temp + child.transform.up/3*2;
-		GameObject newShot = Instantiate (Resources.Load(shots[shotIndex]),temp,transform.rotation) as GameObject;
+		GameObject newShot = Instantiate (shot,temp,transform.rotation) as GameObject;
 		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
 		shotpower = 0;
 	}
@@ -79,8 +84,10 @@ public class Tank : MonoBehaviour {
 	
 		GUI.Label(new Rect(point.x, Screen.height - point.y+10, 200, 20),	 Health.ToString("0.00"));
 		GUI.DrawTexture (new Rect (10, Screen.height - 50, 290/maxshotpower*shotpower, 20), powerBar);
+		
+		GUI.Label(new Rect(point.x, Screen.height - point.y, 200, 20),	 shots[shotIndex]);
 	}
-
+	
 	void Damage(float number){
 		Health -= number;
 	}
