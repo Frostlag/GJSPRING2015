@@ -51,6 +51,12 @@ public class Manager : MonoBehaviour {
 			tankturns.Add(tank);
 			tank = null;
 		}
+		if (Input.GetKeyDown ("q")) {
+			tank.SendMessage("Switch",-1);
+		}
+		if (Input.GetKeyDown ("e")) {
+			tank.SendMessage("Switch",1);
+		}
 	}
 	void ShotEnd(){
 		NextTurn ();

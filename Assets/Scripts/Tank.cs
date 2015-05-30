@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Tank : MonoBehaviour {
 	public Shot shot;
@@ -11,6 +12,8 @@ public class Tank : MonoBehaviour {
 	public float chargerate = 1;
 	public float Health;
 	public Texture2D powerBar;
+	string[] shots = {"Shot","Cluster","Salvo"};
+	int shotIndex = 0;
 
 	Rigidbody2D rigidBody;
 
@@ -47,6 +50,10 @@ public class Tank : MonoBehaviour {
 		}
 	}
 
+	void Switch(int n){
+		shotIndex += n;
+	}
+
 	void Charge(){
 		shotpower = Mathf.Clamp (shotpower+chargerate, 0, maxshotpower);
 	}
@@ -55,7 +62,7 @@ public class Tank : MonoBehaviour {
 		Transform child = this.transform.GetChild (0);
 		Vector3 temp = child.position;
 		temp = temp + child.transform.up/3*2;
-		GameObject newShot = Instantiate (Resources.Load("Cluster"),temp,Quaternion.identity) as GameObject;
+		GameObject newShot = Instantiate (Resources.Load(shots[shotIndex]),temp,Quaternion.identity) as GameObject;
 		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
 		shotpower = 0;
 	}
