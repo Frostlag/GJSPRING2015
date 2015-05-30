@@ -11,6 +11,7 @@ public class Cluster : MonoBehaviour {
 	public float exploderate;
 	public float spread;
 	public float concentration;
+	public int shots;
 	bool dead = false;
 	// Use this for initialization
 	void Start () {
@@ -38,7 +39,7 @@ public class Cluster : MonoBehaviour {
 	void Explode(){
 		if (!dead) {
 			dead = true;
-			for (int i=0; i<5; i++) {
+			for (int i=0; i<shots; i++) {
 				GameObject newShot = Instantiate (Resources.Load("Shot"),this.transform.position,Quaternion.identity) as GameObject;
 				newShot.GetComponent<Shot>().real = false;
 				Vector2 force = Quaternion.AngleAxis (spread * i, Vector3.right) * (this.transform.InverseTransformDirection (GetComponent<Rigidbody2D> ().velocity) / GetComponent<Rigidbody2D>().velocity.magnitude);
