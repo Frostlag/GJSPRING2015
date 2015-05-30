@@ -30,8 +30,14 @@ public class Cluster : MonoBehaviour {
 		
 	}
 	
-	void OnCollisionEnter2D(Collision2D other){
-		if (Time.time > startTime + armtime) {
+	void OnCollisionStay(Collision2D other){
+		if ( Time.time > startTime + armtime) {
+			Explode();
+		}
+	}
+	
+	void OnCollisionEnter(Collision2D other){
+		if ( Time.time > startTime + armtime) {
 			Explode();
 		}
 	}
