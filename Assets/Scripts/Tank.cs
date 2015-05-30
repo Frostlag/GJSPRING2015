@@ -86,7 +86,7 @@ public class Tank : MonoBehaviour {
 	}
 
 	void Explode(){
-		GameObject go = Instantiate (Resources.Load("Explosion"),this.transform.position,Quaternion.identity) as GameObject;
+		GameObject go = Instantiate (Resources.Load("Explosion"),this.transform.position,transform.rotation) as GameObject;
 		Explosion explosion = go.GetComponent<Explosion> ();
 		explosion.explodeRate = 0.005f;
 		explosion.explodeTime = 2;
