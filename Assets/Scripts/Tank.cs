@@ -67,4 +67,6 @@ public class Tank : MonoBehaviour {
 	void Damage(float number){
 		Health -= number;
 	}
+
+
 }

@@ -28,14 +28,15 @@ public class Shot : MonoBehaviour {
 	}
 
 	void Explode(){
-		Invoke ("NextTurn",2);
-		Explosion explosion = Resources.Load("Explosion") as Explosion;
-		Debug.Log (explosion);
-		Explosion texplosion = Instantiate (explosion);
+		Manager.instance.SendMessage ("ShotEnd");
+		GameObject go = Instantiate (Resources.Load("Explosion"),this.transform.position,Quaternion.identity) as GameObject;
+		Explosion explosion = go.GetComponent<Explosion> ();
+		explosion.explodeRate = 0.005f;
+		explosion.explodeTime = 0.5f;
+		explosion.damage = 0.1f;
 		Destroy (gameObject);
+
 	}
-	void NextTurn(){
-		Manager.instance.SendMessage("NextTurn");
-	}
+
 	
 }

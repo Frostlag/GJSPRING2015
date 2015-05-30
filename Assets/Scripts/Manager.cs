@@ -46,7 +46,9 @@ public class Manager : MonoBehaviour {
 			tank = null;
 		}
 	}
-
+	void ShotEnd(){
+		NextTurn ();
+	}
 	void NextTurn(){
 		tank = tankturns [0];
 		tankturns.Remove (tank);

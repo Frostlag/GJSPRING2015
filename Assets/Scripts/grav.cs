@@ -43,7 +43,7 @@ public class grav : MonoBehaviour {
 			Vector2 force = new Vector2(this.GetComponent<Transform>().localPosition.x, this.GetComponent<Transform>().localPosition.y) - new Vector2(other.GetComponent<Transform>().localPosition.x, other.GetComponent<Transform>().localPosition.y);
 			float G = Manager.instance.G;
 			float mag = G*this.getMass()*other.gameObject.GetComponent<grav>().getMass()/Mathf.Pow (force.magnitude,2);
-			if (other.gameObject.GetComponent<Rigidbody2D>())
+			if (other.attachedRigidbody)
 				other.attachedRigidbody.AddForce (force * mag);
 		}
 	}

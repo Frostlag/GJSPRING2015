@@ -8,13 +8,14 @@ public class Explosion : MonoBehaviour {
 	public float damage;
 	// Use this for initialization
 	void Start () {
-	
+		startTime = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		transform.localScale += new Vector3(explodeRate,explodeRate);
 		if (Time.time > startTime + explodeTime){
+			Debug.Log (explodeTime);
 			Destroy(gameObject);
 		}
 	}
