@@ -55,7 +55,7 @@ public class Tank : MonoBehaviour {
 		Transform child = this.transform.GetChild (0);
 		Vector3 temp = child.position;
 		temp = temp + child.transform.up/3*2;
-		Shot newShot = (Shot) Instantiate (shot,temp,Quaternion.identity);
+		GameObject newShot = Instantiate (Resources.Load("Cluster"),temp,Quaternion.identity) as GameObject;
 		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
 		shotpower = 0;
 	}
