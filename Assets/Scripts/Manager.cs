@@ -20,8 +20,17 @@ public class Manager : MonoBehaviour {
 		if (Input.GetKey ("right")) {
 			tank.SendMessage("Move","right");
 		}
-		if (Input.GetKeyDown ("space")) {
-			tank.SendMessage("Fire");
+		if (Input.GetKey ("a")) {
+			tank.SendMessage("Aim","left");
+		}
+		if (Input.GetKey ("d")) {
+			tank.SendMessage("Aim","right");
+		}
+		if (Input.GetKey ("space")) {
+			tank.SendMessage("Charge");
 		} 
+		if (Input.GetKeyUp ("space")) {
+			tank.SendMessage("Fire");
+		}
 	}
 }
