@@ -12,7 +12,7 @@ public class Tank : MonoBehaviour {
 	public float chargerate = 1;
 	public float Health;
 	public Texture2D powerBar;
-	string[] shots = {"Shot","Enbu","Cluster","Salvo"};
+	string[] shots = {"Shot","Enbu","Cluster","Salvo","Chicken"};
 	int shotIndex = 0;
 
 	private float lastshotpower = 0;

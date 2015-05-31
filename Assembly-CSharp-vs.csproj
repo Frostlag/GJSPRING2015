@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Chicken.cs" />
      <Compile Include="Assets\Scripts\Cluster.cs" />
      <Compile Include="Assets\Scripts\Enbu.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />

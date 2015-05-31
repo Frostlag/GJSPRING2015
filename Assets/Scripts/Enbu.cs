@@ -8,7 +8,6 @@ public class Enbu : MonoBehaviour {
 	public float life;
 	public float exploderate;
 	public float damage;
-	public bool real = true;
 	// Use this for initialization
 	void Start () {
 		startTime = Time.time;
