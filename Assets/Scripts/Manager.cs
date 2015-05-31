@@ -39,13 +39,6 @@ public class Manager : MonoBehaviour {
 		tankResource = Resources.Load ("Tank") as GameObject;
 		planetResource = Resources.Load ("Planet") as GameObject;
 		if (random) {
-
-			tanks = new Tank[2];
-			GameObject newTank = Instantiate (tankResource, new Vector2 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange)), Quaternion.identity) as GameObject;
-			tanks [0] = newTank.GetComponent<Tank> ();
-			newTank = Instantiate (tankResource, new Vector2 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange)), Quaternion.identity) as GameObject;
-			tanks [1] = newTank.GetComponent<Tank> ();
-
 			int numplanets = Random.Range (2, maxplanets);
 			try{
 				for (int i = 0; i < numplanets; i++) {
@@ -54,6 +47,13 @@ public class Manager : MonoBehaviour {
 					planets.Add(planet);
 				}
 			}catch(System.Exception e){}
+
+			tanks = new Tank[2];
+			GameObject newTank = Instantiate (tankResource, new Vector2 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange)), Quaternion.identity) as GameObject;
+			tanks [0] = newTank.GetComponent<Tank> ();
+			newTank = Instantiate (tankResource, new Vector2 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange)), Quaternion.identity) as GameObject;
+			tanks [1] = newTank.GetComponent<Tank> ();
+
 
 		}
 
