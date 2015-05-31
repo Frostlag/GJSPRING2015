@@ -16,8 +16,10 @@ public class Manager : MonoBehaviour {
 
 	public Spash splash;
 	public float minDistance;
-	public float mapscale;
 	public int maxplanets;
+	public float distScale;
+	public float xrange;
+	public float yrange;
 
 	private bool wait;
 
@@ -26,16 +28,14 @@ public class Manager : MonoBehaviour {
 	private List<Tank> tankturns = new List<Tank> ();
 	private List<GameObject> planets = new List<GameObject> ();
 	private Tank tank;
-	float xrange;
-	float yrange;
+
 	Camera c;
 
 	// Use this for initialization
 	void Start () {
 		c = Camera.main;
 		Vector3 topright = c.ViewportToWorldPoint(new Vector3(1, 1, c.nearClipPlane));
-		xrange = topright.x/2*mapscale;
-		yrange = topright.y/2*mapscale;
+
 		tankResource = Resources.Load ("Tank") as GameObject;
 		planetResource = Resources.Load ("Planet") as GameObject;
 		if (random) {
@@ -89,7 +89,7 @@ public class Manager : MonoBehaviour {
 			} else {
 				NextTurn ();
 				wait = false;
-				c.transform.position = new Vector3 (0, 0, -10);
+				//c.transform.position = new Vector3 (0, 0, -10);
 			}
 		}
 		if (tank == null)
@@ -127,6 +127,12 @@ public class Manager : MonoBehaviour {
 		if (Input.GetKeyDown ("e")) {
 			tank.SendMessage("Switch",1);
 		}
+		Transform a = tanks[0].GetComponent<Transform>();
+		Transform b = tanks[1].GetComponent<Transform>();
+		Vector3 half = (a.position + b.position) * 0.5f;
+		float dist = Vector3.Distance(a.position, b.position);
+
+		c.transform.position = half + Vector3.back * ( dist * distScale);
 	}
 	void ShotEnd(){
 		NextTurn ();
