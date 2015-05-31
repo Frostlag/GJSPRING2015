@@ -76,7 +76,7 @@ public class Tank : MonoBehaviour {
 		GameObject newShot = Instantiate (shot,temp,child.rotation) as GameObject;
 		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
 		shotpower = 0;
-	}
+	}	
 
 	void OnGUI()
 	{
@@ -87,7 +87,7 @@ public class Tank : MonoBehaviour {
 		
 		GUI.Label(new Rect(point.x, Screen.height - point.y, 200, 20),	 shots[shotIndex]);
 		if (Manager.instance.getTurn() == this) {
-			GUI.Label(new Rect(point.x, Screen.height - point.y-25, 200, 20),	 "Turn");
+			GUI.Label(new Rect(point.x, Screen.height - point.y-25, 200, 20),"Turn");
 		}
 	}
 	

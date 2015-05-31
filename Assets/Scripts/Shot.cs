@@ -26,12 +26,18 @@ public class Shot : MonoBehaviour {
 
 	}
 
-	void OnCollisionEnter2D(Collision2D other){
+	void OnCollisionStay2D(Collision2D other){
 		if ( Time.time > startTime + armtime) {
 			Explode();
 		}
 	}
 
+	void OnCollisionEnter2D(Collision2D other){
+		if ( Time.time > startTime + armtime) {
+			Explode();
+		}
+	}
+	
 	void Explode(){
 		GameObject go = Instantiate (Resources.Load("Explosion"),this.transform.position,Quaternion.identity) as GameObject;
 		Explosion explosion = go.GetComponent<Explosion> ();
