@@ -139,7 +139,7 @@ public class Manager : MonoBehaviour {
 		Vector3 half = (a.position + b.position) * 0.5f;
 		float dist = Vector3.Distance(a.position, b.position);
 
-		c.transform.position = half + Vector3.back * ( dist * distScale);
+		c.transform.position = half + Vector3.back * Mathf.Max(15, dist * distScale);
 	}
 	void ShotEnd(){
 		NextTurn ();
