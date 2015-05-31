@@ -8,6 +8,7 @@ public class Shot : MonoBehaviour {
 	public float explodetime;
 	public float life;
 	public float exploderate;
+	public float damage;
 	public bool real = true;
 	// Use this for initialization
 	void Start () {
@@ -41,11 +42,10 @@ public class Shot : MonoBehaviour {
 	void Explode(){
 		GameObject go = Instantiate (Resources.Load("Explosion"),this.transform.position,Quaternion.identity) as GameObject;
 		Explosion explosion = go.GetComponent<Explosion> ();
-		explosion.explodeRate = 0.005f;
-		explosion.explodeTime = 0.5f;
-		explosion.damage = 1f;
+		explosion.explodeRate = exploderate;
+		explosion.explodeTime = explodetime;
+		explosion.damage = damage;
 		Destroy (gameObject);
-
 	}
 
 	
