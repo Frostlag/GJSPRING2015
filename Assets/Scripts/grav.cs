@@ -11,7 +11,7 @@ public class grav : MonoBehaviour {
 		setScale ();
 		foreach (CircleCollider2D c in GetComponents<CircleCollider2D>()) {
 			if (c.isTrigger){
-				c.radius = 999;
+				c.radius = Mathf.Sqrt(getMass())*3;
 			}
 		}
 	}
