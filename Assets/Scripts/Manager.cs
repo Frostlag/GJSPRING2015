@@ -110,7 +110,9 @@ public class Manager : MonoBehaviour {
 			tank.SendMessage("Aim","right");
 		}
 		if (Input.GetKey ("space")) {
-			tank.SendMessage("Charge");
+			if (tank.getAmmo() > 0){
+				tank.SendMessage("Charge");
+			}
 		}
 		if (Input.GetKeyDown ("up")) {
 			tank.SendMessage("Move","up");
@@ -119,10 +121,12 @@ public class Manager : MonoBehaviour {
 			tank.SendMessage("Move","down");
 		} 
 		if (Input.GetKeyUp ("space")) {
-			tank.SendMessage("Fire");
-			tankturns.Add(tank);
-			tank = null;
-			wait = true;
+			if (tank.getAmmo() > 0){
+				tank.SendMessage("Fire");
+				tankturns.Add(tank);
+				tank = null;
+				wait = true;
+			}
 		}
 		if (Input.GetKeyDown ("q")) {
 			tank.SendMessage("Switch",-1);
