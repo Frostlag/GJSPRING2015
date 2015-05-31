@@ -50,12 +50,12 @@ public class Manager : MonoBehaviour {
 
 			tanks = new Tank[2];
 			int landon = Random.Range(0,planets.Count);
-			GameObject newTank = Instantiate (tankResource, planets[landon].transform.position, Quaternion.identity) as GameObject;
 			int landon1 = Random.Range(0,planets.Count);
-			while (landon1 == landon) Random.Range(0,planets.Count);
+			while (landon1 == landon) landon1 = Random.Range(0,planets.Count);
+			GameObject newTank = Instantiate (tankResource, planets[landon].transform.position, Quaternion.identity) as GameObject;
+			GameObject newTank1 = Instantiate (tankResource, planets[landon1].transform.position, Quaternion.identity) as GameObject;
 			tanks [0] = newTank.GetComponent<Tank> ();
-			newTank = Instantiate (tankResource, planets[landon].transform.position, Quaternion.identity) as GameObject;
-			tanks [1] = newTank.GetComponent<Tank> ();
+			tanks [1] = newTank1.GetComponent<Tank> ();
 
 
 		}

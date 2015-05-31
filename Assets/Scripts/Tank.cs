@@ -29,6 +29,8 @@ public class Tank : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Health < 0) Explode ();
+		if (Manager.instance.getTurn () == this) {
+		}
 	}
 
 	void Move(string direction){
@@ -50,7 +52,6 @@ public class Tank : MonoBehaviour {
 
 		} else {
 			child.transform.Rotate (0, 0, -aimspeed);
-
 		}
 	}
 
