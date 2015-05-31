@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 public class Manager : MonoBehaviour {
 	public Tank[] tanks;
@@ -16,6 +17,7 @@ public class Manager : MonoBehaviour {
 	public Spash splash;
 	public float minDistance;
 	public float mapscale;
+	public int maxplanets;
 
 	private bool wait;
 
@@ -44,13 +46,15 @@ public class Manager : MonoBehaviour {
 			newTank = Instantiate (tankResource, new Vector2 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange)), Quaternion.identity) as GameObject;
 			tanks [1] = newTank.GetComponent<Tank> ();
 
-			int numplanets = Random.Range (2, 9);
+			int numplanets = Random.Range (2, maxplanets);
+			try{
+				for (int i = 0; i < numplanets; i++) {
+					Vector3 pos = newPlanetPos();
+					GameObject planet = Instantiate (planetResource, pos, Quaternion.AngleAxis (Random.Range (0, 360), Vector3.back)) as GameObject;
+					planets.Add(planet);
+				}
+			}catch(System.Exception e){}
 
-			for (int i = 0; i < numplanets; i++) {
-				Vector3 pos = newPlanetPos();
-				GameObject planet = Instantiate (planetResource, pos, Quaternion.AngleAxis (Random.Range (0, 360), Vector3.back)) as GameObject;
-				planets.Add(planet);
-			}
 		}
 
 
@@ -146,8 +150,10 @@ public class Manager : MonoBehaviour {
 	}
 
 	Vector3 newPlanetPos(){
+		Stopwatch stopwatch = Stopwatch.StartNew ();
 		Vector3 ret = new Vector3 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange));
 		while (!isFarEnough(ret)) {
+			if (stopwatch.Elapsed.Seconds > 2) throw new System.Exception("no more space");
 			ret = new Vector3 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange));
 		}
 		return ret;
