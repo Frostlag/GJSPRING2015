@@ -13,6 +13,13 @@ public class Tank : MonoBehaviour {
 	public float Health;
 	public Texture2D powerBar;
 	string[] shots = {"Shot","Enbu","Cluster","Salvo","Chicken"};
+	Dictionary<string, int> ammo = new Dictionary<string, int>(){
+		{"Shot", 10},
+		{"Enbu", 5},
+		{"Cluster", 3},
+		{"Salvo", 3},
+		{"Chicken", 2}
+	};
 	int shotIndex = 0;
 
 	private float lastshotpower = 0;
@@ -22,7 +29,7 @@ public class Tank : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rigidBody = this.GetComponent<Rigidbody2D> ();
-		shot = Resources.Load (shots [shotIndex]) as GameObject;
+		shot = Resources.Load (shots[shotIndex]) as GameObject;
 
 	}
 	
@@ -54,6 +61,10 @@ public class Tank : MonoBehaviour {
 		}
 	}
 
+	public int getAmmo(){
+		return ammo [shots [shotIndex]];
+	}
+
 	void Switch(int n){
 		shotIndex += n;
 		if (shotIndex < 0) {
@@ -62,20 +73,19 @@ public class Tank : MonoBehaviour {
 		if (shotIndex >= shots.Length) {
 			shotIndex -= shots.Length;
 		}
-		shot = Resources.Load (shots [shotIndex]) as GameObject;
+		shot = Resources.Load (shots[shotIndex]) as GameObject;
 	}
 
 	void Charge(){
-		shotpower = Mathf.Clamp (shotpower+chargerate, 0, maxshotpower);
-
+		shotpower = Mathf.Clamp (shotpower + chargerate, 0, maxshotpower);
 	}
 	void Fire(){
-
+		ammo[shots[shotIndex]] = getAmmo() - 1;
 		Transform child = this.transform.GetChild (0);
 		Vector3 temp = child.position;
-		temp = temp + child.transform.up/3*2;
-		GameObject newShot = Instantiate (shot,temp,child.rotation) as GameObject;
-		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
+		temp = temp + child.transform.up / 3 * 2;
+		GameObject newShot = Instantiate (shot, temp, child.rotation) as GameObject;
+		newShot.GetComponent<Rigidbody2D> ().AddForce (child.transform.up.normalized * shotpower, ForceMode2D.Impulse);
 		lastshotpower = shotpower;
 		shotpower = 0;
 	}	
@@ -89,7 +99,7 @@ public class Tank : MonoBehaviour {
 		GUI.Label(new Rect(point.x, Screen.height - point.y+10, 200, 20),	 Health.ToString("0.00"));
 		GUI.DrawTexture (new Rect (10, Screen.height - 50, 290/maxshotpower*shotpower, 20), powerBar);
 		
-		GUI.Label(new Rect(point.x, Screen.height - point.y, 200, 20),	 shots[shotIndex]);
+		GUI.Label(new Rect(point.x, Screen.height - point.y, 200, 20),	 shots[shotIndex] + ":" + getAmmo());
 		if (Manager.instance.getTurn() == this) {
 			GUI.Label(new Rect(point.x, Screen.height - point.y-25, 200, 20),"Turn");
 			GUI.DrawTexture(new Rect(290/maxshotpower*lastshotpower+10,Screen.height - 50,2,20),powerBar);
