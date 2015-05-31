@@ -8,41 +8,52 @@ public class Manager : MonoBehaviour {
 	public bool random;	
 	public static Manager instance = null;
 	public float G;
-	Camera c;
+
 
 	public List<GameObject> waitFor = new List<GameObject> ();
 	public static bool begin = false;
 
 	public Spash splash;
+	public float minDistance;
+	public float mapscale;
 
 	private bool wait;
 
 	private GameObject tankResource ;
 	private GameObject planetResource ;
 	private List<Tank> tankturns = new List<Tank> ();
+	private List<GameObject> planets = new List<GameObject> ();
 	private Tank tank;
-
+	float xrange;
+	float yrange;
+	Camera c;
 
 	// Use this for initialization
 	void Start () {
+		c = Camera.main;
+		Vector3 topright = c.ViewportToWorldPoint(new Vector3(1, 1, c.nearClipPlane));
+		xrange = topright.x/2*mapscale;
+		yrange = topright.y/2*mapscale;
+		tankResource = Resources.Load ("Tank") as GameObject;
+		planetResource = Resources.Load ("Planet") as GameObject;
 		if (random) {
-			tankResource = Resources.Load ("Tank") as GameObject;
-			planetResource = Resources.Load ("Planet") as GameObject;
+
 			tanks = new Tank[2];
-			GameObject newTank = Instantiate (tankResource, new Vector2 (Random.Range (-10, 10), Random.Range (-10, 10)), Quaternion.identity) as GameObject;
+			GameObject newTank = Instantiate (tankResource, new Vector2 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange)), Quaternion.identity) as GameObject;
 			tanks [0] = newTank.GetComponent<Tank> ();
-			newTank = Instantiate (tankResource, new Vector2 (Random.Range (-10, 10), Random.Range (-10, 10)), Quaternion.identity) as GameObject;
+			newTank = Instantiate (tankResource, new Vector2 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange)), Quaternion.identity) as GameObject;
 			tanks [1] = newTank.GetComponent<Tank> ();
 
-			int planets = Random.Range (2, 9);
+			int numplanets = Random.Range (2, 9);
 
-			for (int i = 0; i < planets; i++) {
-				Vector2 pos = new Vector2 (Random.Range (-10, 10), Random.Range (-10, 10));
+			for (int i = 0; i < numplanets; i++) {
+				Vector3 pos = newPlanetPos();
 				GameObject planet = Instantiate (planetResource, pos, Quaternion.AngleAxis (Random.Range (0, 360), Vector3.back)) as GameObject;
+				planets.Add(planet);
 			}
 		}
 
-		c = Camera.main;
+
 		if (!instance) {
 			instance = this;
 		}
@@ -126,7 +137,22 @@ public class Manager : MonoBehaviour {
 		splash.SendMessage ("GameOver");
 	}
 	public Tank getTurn(){ return tank; }
-	
+
+	bool isFarEnough(Vector3 pos){
+		foreach (GameObject go in planets) {
+			if (Vector3.Distance(go.transform.position,pos) < minDistance) return false;
+		}
+	    return true;
+	}
+
+	Vector3 newPlanetPos(){
+		Vector3 ret = new Vector3 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange));
+		while (!isFarEnough(ret)) {
+			ret = new Vector3 (Random.Range (-xrange, xrange), Random.Range (-yrange, yrange));
+		}
+		return ret;
+
+	}
 
 
 }
