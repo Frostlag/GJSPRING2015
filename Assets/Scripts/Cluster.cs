@@ -54,6 +54,7 @@ public class Cluster : MonoBehaviour {
 				newShot.GetComponent<Shot>().armtime = armtime;
 				newShot.GetComponent<Shot>().life = life;
 				newShot.GetComponent<Shot>().damage = damage;
+				newShot.GetComponent<Rigidbody2D>().velocity = this.GetComponent<Rigidbody2D>().velocity;
 				Vector2 force = Quaternion.AngleAxis (spread * i, Vector3.right) * (this.transform.InverseTransformDirection (GetComponent<Rigidbody2D> ().velocity) / GetComponent<Rigidbody2D>().velocity.magnitude);
 				newShot.GetComponent<Rigidbody2D> ().AddForce (force * concentration, ForceMode2D.Impulse);
 			}
