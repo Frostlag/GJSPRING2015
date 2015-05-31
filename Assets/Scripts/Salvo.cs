@@ -9,10 +9,11 @@ public class Salvo : MonoBehaviour {
 	public float life;
 	public float exploderate;
 	public float damage;
+	public float spread;
 	// Use this for initialization
 	void Start () {
 		for (int i = 0; i< volley; i++) {
-			Vector3 temp = this.transform.position + this.transform.right * (i-volley/2)/10;
+			Vector3 temp = this.transform.position + this.transform.right * (i-volley/2)*spread;
 			GameObject newShot = Instantiate (Resources.Load("Shot"), temp, Quaternion.identity) as GameObject;
 			newShot.GetComponent<Shot>().armtime = armtime;
 			newShot.GetComponent<Shot>().exploderate = exploderate;

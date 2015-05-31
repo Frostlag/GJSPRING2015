@@ -11,9 +11,12 @@ public class Manager : MonoBehaviour {
 	Camera c;
 
 	public List<GameObject> waitFor = new List<GameObject> ();
+	public static bool begin = false;
+
+	public Spash splash;
 
 	private bool wait;
-	public static bool begin = false;
+
 	private GameObject tankResource ;
 	private GameObject planetResource ;
 	private List<Tank> tankturns = new List<Tank> ();
@@ -117,7 +120,11 @@ public class Manager : MonoBehaviour {
 		tank = tankturns [0];
 		tankturns.Remove (tank);
 	}
-
+	void GameOver(){
+		begin = false;
+		splash.gameObject.SetActive (true);
+		splash.SendMessage ("GameOver");
+	}
 	public Tank getTurn(){ return tank; }
 	
 

@@ -14,7 +14,8 @@ public class Tank : MonoBehaviour {
 	public Texture2D powerBar;
 	string[] shots = {"Shot","Cluster","Salvo"};
 	int shotIndex = 0;
-	Sprite shotpic;
+
+	private float lastshowpower = 0;
 
 	Rigidbody2D rigidBody;
 
@@ -75,6 +76,7 @@ public class Tank : MonoBehaviour {
 		temp = temp + child.transform.up/3*2;
 		GameObject newShot = Instantiate (shot,temp,child.rotation) as GameObject;
 		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
+		lastshowpower = shotpower;
 		shotpower = 0;
 	}	
 
@@ -103,6 +105,7 @@ public class Tank : MonoBehaviour {
 		explosion.explodeRate = 0.005f;
 		explosion.explodeTime = 2;
 		explosion.damage = 1f;
+		Manager.instance.SendMessage ("GameOver");
 		Destroy (gameObject);
 		
 	}
