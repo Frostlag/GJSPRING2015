@@ -115,10 +115,14 @@ public class Manager : MonoBehaviour {
 			}
 		}
 		if (Input.GetKeyDown ("up")) {
-			tank.SendMessage("Move","up");
+			if (tank.getJump() > 0){
+				tank.SendMessage("Move","up");
+			}
 		} 
 		if (Input.GetKeyDown ("down")) {
-			tank.SendMessage("Move","down");
+			if (tank.getJump() > 0){
+				tank.SendMessage("Move","down");
+			}
 		} 
 		if (Input.GetKeyUp ("space")) {
 			if (tank.getAmmo() > 0){
@@ -146,6 +150,7 @@ public class Manager : MonoBehaviour {
 	}
 	void NextTurn(){
 		tank = tankturns [0];
+		tank.setJump ();
 		tankturns.Remove (tank);
 	}
 	void GameOver(){

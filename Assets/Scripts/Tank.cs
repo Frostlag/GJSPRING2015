@@ -12,6 +12,8 @@ public class Tank : MonoBehaviour {
 	public float chargerate = 1;
 	public float Health;
 	public Texture2D powerBar;
+	public int jumps;
+	int jump;
 	string[] shots = {"Shot","Enbu","Cluster","Salvo","Chicken"};
 	Dictionary<string, int> ammo = new Dictionary<string, int>(){
 		{"Shot", 10},
@@ -28,6 +30,7 @@ public class Tank : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		jump = jumps;
 		rigidBody = this.GetComponent<Rigidbody2D> ();
 		shot = Resources.Load (shots[shotIndex]) as GameObject;
 
@@ -39,15 +42,22 @@ public class Tank : MonoBehaviour {
 		if (Manager.instance.getTurn () == this) {
 		}
 	}
-
+	public int getJump(){
+		return jump;
+	}
+	public void setJump(){
+		jump = jumps;
+	}
 	void Move(string direction){
 		if (direction == "left") {
 			this.transform.position += transform.right.normalized * -movespeed;
 		} else if (direction == "right"){
 			this.transform.position += transform.right.normalized * movespeed;
 		}else if (direction == "up"){
+			jump -= 1;
 			this.rigidBody.AddForce(transform.up.normalized * thrustforce);
 		}else if (direction == "down"){
+			jump -=1;
 			this.rigidBody.AddForce(transform.up.normalized * -thrustforce);
 		}
 	}
