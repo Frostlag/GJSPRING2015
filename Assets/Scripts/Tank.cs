@@ -15,7 +15,7 @@ public class Tank : MonoBehaviour {
 	string[] shots = {"Shot","Cluster","Salvo"};
 	int shotIndex = 0;
 
-	private float lastshowpower = 0;
+	private float lastshotpower = 0;
 
 	Rigidbody2D rigidBody;
 
@@ -76,7 +76,7 @@ public class Tank : MonoBehaviour {
 		temp = temp + child.transform.up/3*2;
 		GameObject newShot = Instantiate (shot,temp,child.rotation) as GameObject;
 		newShot.GetComponent<Rigidbody2D> ().AddForce(child.transform.up.normalized * shotpower,ForceMode2D.Impulse);
-		lastshowpower = shotpower;
+		lastshotpower = shotpower;
 		shotpower = 0;
 	}	
 
@@ -92,6 +92,7 @@ public class Tank : MonoBehaviour {
 		GUI.Label(new Rect(point.x, Screen.height - point.y, 200, 20),	 shots[shotIndex]);
 		if (Manager.instance.getTurn() == this) {
 			GUI.Label(new Rect(point.x, Screen.height - point.y-25, 200, 20),"Turn");
+			GUI.DrawTexture(new Rect(290/maxshotpower*lastshotpower+10,Screen.height - 50,2,20),powerBar);
 		}
 	}
 	
