@@ -1,14 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\grav.cs">
     <Files>
+      <File FileName="Assets\Scripts\grav.cs" Line="26" Column="14" />
       <File FileName="Assets\Scripts\Shot.cs" Line="48" Column="24" />
-      <File FileName="Assets\Scripts\grav.cs" Line="24" Column="2" />
-      <File FileName="Assets\Scripts\Tank.cs" Line="105" Column="1" />
-      <File FileName="Assets\Scripts\Cluster.cs" Line="55" Column="46" />
-      <File FileName="Assets\Scripts\Explosion.cs" Line="29" Column="1" />
-      <File FileName="Assets\Scripts\Manager.cs" Line="116" Column="1" />
-      <File FileName="Assets\Scripts\Salvo.cs" Line="21" Column="49" />
+      <File FileName="Assets\Scripts\Tank.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cluster.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Explosion.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Manager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Salvo.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
