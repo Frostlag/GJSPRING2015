@@ -80,6 +80,8 @@ public class Tank : MonoBehaviour {
 
 	void OnGUI()
 	{
+		if (!Manager.begin)
+			return;
 		var point = Camera.main.WorldToScreenPoint(transform.position);
 	
 		GUI.Label(new Rect(point.x, Screen.height - point.y+10, 200, 20),	 Health.ToString("0.00"));

@@ -5,8 +5,7 @@ using System.Linq;
 
 public class Manager : MonoBehaviour {
 	public Tank[] tanks;
-	private List<Tank> tankturns = new List<Tank> ();
-	private Tank tank;
+	public bool random;	
 	public static Manager instance = null;
 	public float G;
 	Camera c;
@@ -14,24 +13,30 @@ public class Manager : MonoBehaviour {
 	public List<GameObject> waitFor = new List<GameObject> ();
 
 	private bool wait;
+	public static bool begin = false;
 	private GameObject tankResource ;
 	private GameObject planetResource ;
+	private List<Tank> tankturns = new List<Tank> ();
+	private Tank tank;
+
 
 	// Use this for initialization
 	void Start () {
-		tankResource = Resources.Load ("Tank") as GameObject;
-		planetResource = Resources.Load ("Planet") as GameObject;
-		tanks = new Tank[2];
-		GameObject newTank = Instantiate (tankResource, new Vector2(Random.Range (-10,10),Random.Range(-10,10)), Quaternion.identity) as GameObject;
-		tanks [0] = newTank.GetComponent<Tank>();
-		newTank = Instantiate (tankResource, new Vector2(Random.Range (-10,10),Random.Range(-10,10)), Quaternion.identity) as GameObject;
-		tanks [1] = newTank.GetComponent<Tank>();
+		if (random) {
+			tankResource = Resources.Load ("Tank") as GameObject;
+			planetResource = Resources.Load ("Planet") as GameObject;
+			tanks = new Tank[2];
+			GameObject newTank = Instantiate (tankResource, new Vector2 (Random.Range (-10, 10), Random.Range (-10, 10)), Quaternion.identity) as GameObject;
+			tanks [0] = newTank.GetComponent<Tank> ();
+			newTank = Instantiate (tankResource, new Vector2 (Random.Range (-10, 10), Random.Range (-10, 10)), Quaternion.identity) as GameObject;
+			tanks [1] = newTank.GetComponent<Tank> ();
 
-		int planets = Random.Range(2, 9);
+			int planets = Random.Range (2, 9);
 
-		for (int i = 0; i < planets; i++) {
-			Vector2 pos = new Vector2(Random.Range (-10,10),Random.Range(-10,10));
-			GameObject planet = Instantiate(planetResource,pos,Quaternion.AngleAxis(Random.Range (0,360),Vector3.back)) as GameObject;
+			for (int i = 0; i < planets; i++) {
+				Vector2 pos = new Vector2 (Random.Range (-10, 10), Random.Range (-10, 10));
+				GameObject planet = Instantiate (planetResource, pos, Quaternion.AngleAxis (Random.Range (0, 360), Vector3.back)) as GameObject;
+			}
 		}
 
 		c = Camera.main;
@@ -47,6 +52,8 @@ public class Manager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (!begin)
+			return;
 		if (wait) {
 			if (waitFor.Count != 0) {
 				if (waitFor[0] != null){
@@ -112,4 +119,7 @@ public class Manager : MonoBehaviour {
 	}
 
 	public Tank getTurn(){ return tank; }
+	
+
+
 }
